@@ -9,11 +9,20 @@
   <body>
       there's like NO ai or whatever used for this so it'll all be truly unhinged<br>
 
-       <button onclick="displayEmoji()">Emojis.</button>
-       <button onclick="displayChords()">Chords.</button>
-       <button onclick="displayColour()">Colour.</button>
+       <button onclick="displayEmoji()">Emojis.</button><br>
+       <button onclick="displayChords(0)">Chords (simple).</button>
+       <button onclick="displayChords(0.5)">Chords (intermediate).</button>
+       <button onclick="displayChords(1)">Chords (advanced).</button><br>
+       <button onclick="displayColour()">Colour.</button><br>
+       <button onclick="displayTempo()">Tempo.</button><br>
+       <button onclick="displayTimeSig(true)">Time Sig (simple).</button>
+       <button onclick="displayTimeSig(false)">Time Sig (complex).</button><br>
+       <button onclick="displayTime()">Generate time.</button><br>
 
       <h2 id="emoji">Emojis will manifest here (three of them).</h2>
       <h2 id="chords">Chords will manifest here.</h2>
+      <h2 id="tempo">Tempo will manifest here.</h2>
+      <h2 id="timesig">Time Signature will manifest here.</h2>
+      <h2 id="timelimit">How much time will you have? Let fate decide your destiny.</h2>
   </body>
 </html>

@@ -5,7 +5,7 @@ function randTime() {
     if (timeRemMins == 0) {
         timeRemMins = "00";
     }
-    return timeInHrs + ":" + timeRemMins;
+    return timeInHrs + "h" + timeRemMins + "m";
 }
 
 function randColour() {
@@ -14,15 +14,17 @@ function randColour() {
     var colGreen = Math.floor(Math.random() * 256).toString(16); // yeah
 
     //The actual script will have logic to set the page background to one of the colours it generates, or a small division of it at least for accessibility.
-    return "#" + colRed + colGreen + colBlue;
+    return "#" + "0".repeat(2 - colRed.length) + colRed
+               + "0".repeat(2 - colGreen.length) + colGreen
+               + "0".repeat(2 - colBlue.length) + colBlue;
 }
 
 function randTempo() {
     return Math.floor((Math.random() * 30))*5 + 50; //Effective range is 50-200, increments of 5
 }
 
-function randTimeSig() {
-    var sigSimple = true;
+function randTimeSig(timeComplex) {
+    var sigSimple = timeComplex;
     var sigNumerator = 2;
     var sigDenominator = 2;
     if (sigSimple) {
@@ -35,16 +37,28 @@ function randTimeSig() {
     return sigNumerator + "/" + sigDenominator;
 }
 
-function randChord() {
-    var chordKeysList = ["C", "C#", "Db", "D", "D#", "Eb", "E", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B"];
+function randChord(complexity) {
+    var chordKeysList = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     var chordModesList = ["", "Maj", "Min", "+", "°", "ø", "MinMaj7"];
     var chordExtList = ["", "7", "9", "11", "13"];
     var chordAddList = ["", "sus4", "sus2", "add2", "add4", "add6", "no3", "no5", "#9", "b9", "#11", "b11", "#13", "b13"]
-    var chordSimple = false;
-    if (chordSimple) {
+    if (complexity == 0) {
         chordKey = chordKeysList[Math.floor(Math.random() * chordKeysList.length)];
         chordMode = chordModesList[Math.floor(Math.random() * 2) + 1];
         return chordKey + chordMode;
+    }
+    else if (complexity > 0 && complexity < 1) {
+        var chordKey = chordKeysList[Math.floor(Math.random() * chordKeysList.length)];
+        var chordMode = chordModesList[Math.floor(Math.random() * chordModesList.length)];
+        var chordExt = chordExtList[Math.floor(Math.random() * chordExtList.length)];
+        if (chordMode == "MinMaj7")
+        {
+            return chordKey + chordMode;
+        }
+        else
+        {
+            return chordKey + chordMode + chordExt;
+        }
     }
     else {
         var chordKey = chordKeysList[Math.floor(Math.random() * chordKeysList.length)];
@@ -76,14 +90,26 @@ function displayEmoji(){
     }
 }
 
-function displayChords() {
+function displayChords(comp) {
     var chordloops = 8;
     document.getElementById("chords").innerHTML = "";
     for (j = 0; j < chordloops; j++) {
-        document.getElementById("chords").innerHTML = document.getElementById("chords").innerHTML + randChord() + ", ";
+        document.getElementById("chords").innerHTML = document.getElementById("chords").innerHTML + randChord(comp) + ", ";
     }
 }
 
 function displayColour() {
     document.body.style.backgroundColor = randColour();
+}
+
+function displayTempo() {
+    document.getElementById("tempo").innerHTML = randTempo() + " BPM";
+}
+
+function displayTimeSig(c) {
+    document.getElementById("timesig").innerHTML = randTimeSig(c);
+}
+
+function displayTime() {
+    document.getElementById("timelimit").innerHTML = "You have " + randTime() + ". Get crackin!";
 }
